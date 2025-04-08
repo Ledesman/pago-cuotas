@@ -1,10 +1,11 @@
 import React, { useState} from 'react';
 import { supabase } from '../supabase/client';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "../App.css"
 
 
-const Login = () => {
+const Login = ({setToken}) => {
+let navigate = useNavigate();
 
 const [formData, setFormData] = useState({
   name: '',
@@ -34,7 +35,10 @@ function handleChange(e) {
       })
       if (error)  throw error;
       console.log(data);
-     // alert('Usuario registrado correctamente, por favor verifica tu correo');
+      setToken(data)
+      // Guardar el token en sessionStorage
+    navigate('/')
+    
     } catch (error) {
       alert( error);
     }
@@ -47,7 +51,7 @@ function handleChange(e) {
         <div className='container text-center p-4'>
 
         <h1 className="card-title">Login</h1>
-        <div class="row align-items-start">
+        <div className="row align-items-start">
         
             
 

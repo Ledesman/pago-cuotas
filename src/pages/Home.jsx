@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import AddForm from '../components/AddForm';
+
 
 const Home = ({token}) => {
 
@@ -22,7 +24,7 @@ const Home = ({token}) => {
 
 
         <button className='btn btn-primary ' onClick={handleLogout}>Salir</button>
-
+        <AddForm />
 </div>
    
     );

@@ -49,7 +49,7 @@ const AddForm = () => {
     <div>
          <div className='container p-4'>
         
-        <h1 class="text-3xl font-bold underline">
+        <h1 className="text-3xl font-bold underline">
         Form Clientes
             </h1>
        

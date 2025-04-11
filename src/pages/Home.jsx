@@ -23,7 +23,9 @@ const Home = ({token}) => {
 
 
 
-        <button className='btn btn-primary ' onClick={handleLogout}>Salir</button>
+        
+        <button class=" bg-cyan-500 px-4 py-2 text-white hover:bg-fuchsia-500" onClick={handleLogout}>Salir</button>
+       
         <AddForm />
 </div>
    

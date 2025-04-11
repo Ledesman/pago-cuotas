@@ -35,7 +35,7 @@ const AddForm = () => {
                 cuotas: formData.cuotas,
                 numerCotas: formData.numerCotas,
                 mes: formData.mes,
-                uuid: user.data.user.id
+                uuid: user.id
             });
             if (error) throw error;
             console.log(data);
@@ -48,8 +48,10 @@ const AddForm = () => {
 
     <div>
          <div className='container p-4'>
-        <h1> Form Clientes</h1>
-         
+        
+        <h1 class="text-3xl font-bold underline">
+        Form Clientes
+            </h1>
        
 
         <form onSubmit={handleSubmit}>
@@ -86,10 +88,14 @@ const AddForm = () => {
             placeholder='Diciembre'
             onChange={handleChange}/>
 
-       <button className='btn btn-success' type="submit">Agregar</button>
+       <button className='bg-green-800 hover:bg-blue-700 text-white font-bold py-2 px-4 roundeds' type="submit">Agregar</button>
+       
         </form>
 </div>
     </div>
+
+
+        
 
     )
 }

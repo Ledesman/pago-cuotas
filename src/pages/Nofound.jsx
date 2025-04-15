@@ -9,8 +9,8 @@ const Nofound = () => {
     <div>
          <h2 className="">Pagina no Encontrada !!!</h2>
               <p>Buscando...</p>
-              <img src={notFunt} alt="" />
-              <p>Dirijete a inicio <span><Link to="/">Inicio</Link></span></p>
+              <img src={notFunt} alt="" className="mx-auto h-60 w-auto"/>
+              <p>Dirijete a inicio <span><Link to="/login">Inicio</Link></span></p>
     </div>
 
     )

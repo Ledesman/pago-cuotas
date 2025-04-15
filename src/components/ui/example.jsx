@@ -2,85 +2,56 @@
 export default function Example() {
     return (
       <>
-        {/*
-          This example requires updating your template:
-  
-          ```
-          <html class="h-full bg-white">
-          <body class="h-full">
-          ```
-        */}
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img
-              alt="Your Company"
-              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-              className="mx-auto h-10 w-auto"
-            />
-            <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-              Bienvenido a tu cuenta
-            </h2>
-          </div>
-  
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form action="#" method="POST" className="space-y-6">
-              <div>
-                <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
-                  Email address
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    autoComplete="email"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  />
-                </div>
-              </div>
-  
-              <div>
-                <div className="flex items-center justify-between">
-                  <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
-                    Password
-                  </label>
-                  <div className="text-sm">
-                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                      Forgot password?
-                    </a>
+       <div className="container mx-auto p-4">
+      <div className="flex justify-between items-center mb-8">
+        <p className="text-gray-700">...email and role.</p>
+        <Button className="bg-indigo-600 hover:bg-indigo-700">Add user</Button>
+      </div>
+
+      <div className="overflow-hidden border-b border-gray-200 rounded-lg">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-white">
+            <tr>
+              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-900 tracking-wider">
+                Title
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-900 tracking-wider">
+                Status
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-900 tracking-wider">
+                Role
+              </th>
+              <th scope="col" className="relative px-6 py-3">
+                <span className="sr-only">Edit</span>
+              </th>
+            </tr>
+          </thead>
+          {/* <tbody className="bg-white divide-y divide-gray-200">
+             {users.map((user, index) => ( 
+              <tr key={index}>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex flex-col">
+                    <div className="text-sm font-medium text-gray-900">{user.title}</div>
+                    <div className="text-sm text-gray-500">{user.subtitle}</div>
                   </div>
-                </div>
-                <div className="mt-2">
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    required
-                    autoComplete="current-password"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  />
-                </div>
-              </div>
-  
-              <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Sign in
-                </button>
-              </div>
-            </form>
-  
-            <p className="mt-10 text-center text-sm/6 text-gray-500">
-              Not a member?{' '}
-              <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                Start a 14 day free trial
-              </a>
-            </p>
-          </div>
-        </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="px-3 py-1 inline-flex text-xs leading-5 font-medium rounded-full bg-green-100 text-green-800">
+                    {user.status}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.role}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                    Edit
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody> */}
+        </table>
+      </div>
+    </div>
       </>
     )
   }

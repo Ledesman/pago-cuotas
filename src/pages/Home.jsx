@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import AddForm from '../components/AddForm';
+
 
 import FormList from '../components/FormList';
 
@@ -45,7 +45,7 @@ const Home = ({token}) => {
         <FormList />
     </div>
        
-        <AddForm />
+        
 </div>
    
     );

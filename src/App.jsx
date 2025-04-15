@@ -1,5 +1,6 @@
 import React,{useEffect, useState} from 'react';
 import { SignUp, Login, NotFound, Home } from './pages';
+import AddForm from './components/AddForm';
 import { Routes, Route } from 'react-router-dom';
 import { FormContextProvider } from './context/FormContext';
 import './App.css';
@@ -35,6 +36,8 @@ const App = () => {
     <Route path="/signup" element={<SignUp />} />
     <Route path="/login" element={<Login  setToken={setToken}/>} />
     <Route path="*" element={<NotFound />} />
+    <Route path='/add' element={<AddForm /> }/>
+  
 
   </Routes>
 

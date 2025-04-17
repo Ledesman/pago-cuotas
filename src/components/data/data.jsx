@@ -1,0 +1,17 @@
+export const navbarLink = [
+    { id:1,
+        title: "Inicio",
+         link: "/" },
+    { id:2,
+        title: "Todos-Clientes",
+         link: "/clientes" },
+    { id:3,
+        title: "Pagos",
+         link: "/pagos" },
+    { id:4,
+        title: "Login",
+         link: "/login" },
+    { id:5,
+        title: "Registro",
+         link: "/registro" },
+]

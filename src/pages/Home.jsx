@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import Navbar from '../components/Navbar';
 
 import FormList from '../components/FormList';
 
@@ -17,8 +17,12 @@ const Home = ({token}) => {
     return (
   
     <div className="container-fluid">
+        <div className='container p-5'>
+         <Navbar /> 
+        </div>
+        
  <div className="g-col-4">
-    <h3>Home Page <br /></h3>
+    
     <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Por salir</button>
 
 <div className="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">

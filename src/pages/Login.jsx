@@ -99,7 +99,7 @@ function handleChange(e) {
         </div>
         
         <br />
-            <button className='btn btn-outline-primary flex w-full justify-cente' type="submit">Login</button>
+            <button className='btn btn-outline-primary justify-between' type="submit">Login</button>
             
         </form>
             </div>

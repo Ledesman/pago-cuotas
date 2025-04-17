@@ -16,11 +16,12 @@ export const FormContextProvider = ({children}) => {
 
     const [forms, setForms] = useState([]);
 
-    const getForms = async () => {
+    const getForms = async (estado = true) => {
         const user = await supabase.auth.getUser();
     
           console.log(user.data.user);
      const {data, error} = await supabase.from("pagos").select()
+     .eq("estado", estado)
         .order("id", { ascending: true });
 
        setForms(data);
@@ -29,19 +30,43 @@ export const FormContextProvider = ({children}) => {
 
       
     }
-    // const getFormsById = async () => {
-    //     const user = supabase.auth.getUser();
-    //     console.log(user);
-    //     const { data, error } = await supabase
-    // .from("pagos")
-    // .select()
-    // .eq("id", user.id)
-    // .onder("id", { ascending: true });
-    //     if (error) throw error;
-    //     return data;
-    // }
+    const createForm = async (formData) =>{
+        try {
+            const user = supabase.auth.getUser();
+            console.log(user);
+            const {data, error} = await supabase.from("pagos").insert({
+                nombre: formData.nombre,
+                apellido: formData.apellido,
+                montoPagar: formData.montoPagar,
+                fechaPago: formData.fechaPago,
+                numerCotas: formData.numerCotas,
+                mes: formData.mes,
+                cuota_act: formData.cuota_act,
+                created_at: new Date(),
+                observacion: formData.observacion,
+                estado: true,
+                uuid: user.id
+            });
+            if (error) throw error;
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    const getFormsFalse = async (estado = false) => {
+        const user = await supabase.auth.getUser();
+    
+        console.log(user.data.user);
+   const {data, error} = await supabase.from("pagos").select()
+   .eq("estado", estado)
+      .order("id", { ascending: true });
 
-    return (<FormContext.Provider value={{forms, getForms}}>
+     setForms(data);
+      if (error) throw error;
+     // return data;
+    }
+
+    return (<FormContext.Provider value={{forms, getForms, createForm, getFormsFalse}}>
         {children}
         </FormContext.Provider>
     )

@@ -15,8 +15,12 @@ export const useForms = () =>{
 export const FormContextProvider = ({children}) => {
 
     const [forms, setForms] = useState([]);
+    const [adding, setadding] = useState(false);
+    const [loading, setLoading] = useState(false);
+    // Removed unused error state
 
     const getForms = async (estado = true) => {
+        setLoading(true)
         const user = await supabase.auth.getUser();
     
           console.log(user.data.user);
@@ -27,10 +31,12 @@ export const FormContextProvider = ({children}) => {
        setForms(data);
         if (error) throw error;
        // return data;
-
+       setLoading(false)
+    
       
     }
     const createForm = async (formData) =>{
+        
         try {
             const user = supabase.auth.getUser();
             console.log(user);
@@ -52,6 +58,10 @@ export const FormContextProvider = ({children}) => {
         } catch (error) {
             console.error(error);
         }
+        finally {
+            setadding(false);
+        }
+
     }
     const getFormsFalse = async (estado = false) => {
         const user = await supabase.auth.getUser();
@@ -66,7 +76,46 @@ export const FormContextProvider = ({children}) => {
      // return data;
     }
 
-    return (<FormContext.Provider value={{forms, getForms, createForm, getFormsFalse}}>
+    const deleteForm = async (id) =>{
+        const user = await supabase.auth.getUser();
+    
+        console.log(user.data.user.id);
+      const {error, data} = await supabase.from("pagos").delete()
+       .eq("uuid", user.data.user.id)
+       .eq("id", id)
+
+       if(error) throw error
+        setForms(
+
+            forms.filter(form => form.id !== id)
+        )
+       console.log(data)
+    }
+    const updateForm = async (id, updates) =>{
+        try {
+            const { data, error } = await supabase
+              .from('pagos')
+              .update(updates)
+              .eq('id', id)
+              .select();
+      
+            if (error) {
+              throw error
+            }
+      
+            // Actualiza el estado local 'items' para reflejar el cambio inmediatamente
+            setForms(prevItems =>
+              prevItems.map(item => (item.id === id ? { ...item, ...data[0] } : item))
+            );
+      
+            return data[0];
+          } catch (err) {
+           console.log(err)
+          }
+       
+    }
+
+    return (<FormContext.Provider value={{forms, getForms, createForm, getFormsFalse, deleteForm,updateForm, adding, loading}}>
         {children}
         </FormContext.Provider>
     )

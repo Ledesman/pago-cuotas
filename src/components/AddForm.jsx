@@ -5,10 +5,9 @@ import { useForms } from '../context/FormContext';
 import Navbar from '../components/Navbar';
 const AddForm = () => {
     
-    
-
     let navigate = useNavigate();
-    const { createForm } = useForms();
+    
+    const { createForm, adding } = useForms();
         const [formData, setFormData] = useState({
             nombre: '',
             apellido: '',
@@ -17,6 +16,8 @@ const AddForm = () => {
             numerCotas: 0,
             mes: '',
             cuota_act: 0,
+            observacion: '',
+            created_at: new Date(),
             
 
         });
@@ -33,9 +34,21 @@ const AddForm = () => {
            }
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
       createForm(formData);
-        alert("Cliente agregado con exito")
-        navigate("/")
+        setFormData({
+            nombre: '',
+            apellido: '',
+            montoPagar: 0,
+            fechaPago: '',
+            numerCotas: 0,
+            mes: '',
+            cuota_act: 0,
+            observacion: '',
+            created_at: new Date(),
+        });
+        alert("Cliente agregado con exito");
+        navigate("/");
     }
     function handleList  (e)  {
         e.preventDefault();
@@ -72,6 +85,7 @@ const AddForm = () => {
             onChange={handleChange}
             name='nombre'
              placeholder='Ingrese nombre'
+             value={formData.nombre}
           />
         </div>
         <div className="py-4 flex items-center border-b border-gray-100">
@@ -167,7 +181,10 @@ const AddForm = () => {
         </div>
         <div class="d-grid gap-2 col-6 mx-auto">
 
-       <button className='btn btn-outline-success p-2 m-4 ' type="submit">Agregar</button>
+       <button disabled={adding}
+       className='btn btn-outline-success p-2 m-4 ' type="submit">
+         {adding ? "Cargando..." : "Agregar"}
+       </button>
         </div>
         </form>
 

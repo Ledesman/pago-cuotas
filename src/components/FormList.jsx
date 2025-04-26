@@ -9,7 +9,7 @@ function FormList() {
    let navigate = useNavigate();
  
 
-const { forms, getForms, loading, deleteForm, updateForm } = useForms();
+const { forms, getForms, loading, deleteForm, updateForm, StateForm } = useForms();
 const [formData, setFormData] = useState({
             id: '',
             nombre: '',
@@ -20,15 +20,12 @@ const [formData, setFormData] = useState({
             mes: '',
             cuota_act: '',
             observacion: '',
-            estado: '',
+            estado: Boolean,
             created_at: new Date(),
             
 
         });
-       
-
-
-
+  
 useEffect(() =>{
     getForms()
 }, [])
@@ -69,21 +66,7 @@ function handleList  (e)  {
 
       })
     }
-//  function handleSubmit (){
-//   updateForm(formData.id, {
-//     nombre: formData.nombre,
-//     apellido: formData.apellido,
-//     montoPagar: formData.montoPagar,
-//     fechaPago: formData.fechaPago,
-//     numerCotas: formData.numerCotas,
-//     mes: formData.mes,
-//     cuota_act: formData.cuota_act,
-//     observacion: formData.observacion,
-//     estado: formData.estado
-//   })
-//  }
 
- 
  const handleSubmit = async (e) =>{
     e.preventDefault();
     updateForm(formData.id,{
@@ -112,7 +95,11 @@ function handleList  (e)  {
        
       })
      }
-
+  const handleChangeState = () =>{
+    StateForm(formData.id, {estado: !formData.estado})
+    alert('Cambio de estado del cliente no Activo')
+    navigate('/vertodo');
+  }
   return (
     <>
          
@@ -120,7 +107,7 @@ function handleList  (e)  {
 
       <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-8">
-        <p className="text-gray-700">Lista de clientes.</p>
+        <p className="text-gray-700 text-3xl font-bold underline">Lista de clientes</p>
         <button className="btn btn-outline-success" onClick={handleList}>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-plus" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5"/>
@@ -138,6 +125,20 @@ function handleList  (e)  {
         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div className="modal-body">
+      <div className="py-4 flex items-center border-b border-gray-100">
+  <label htmlFor="estado" className="w-1/3 text-gray-800 font-medium">
+    Estado
+  </label>
+  <input
+    id="estado"
+    name='estado'
+    type="hidden"
+    defaultValue={formData.estado}
+    onChange={handleChange}
+    className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
+  />
+ <button onClick={() => handleChangeState()} className='btn btn-outline-light p-2 m-4' data-bs-dismiss="modal">Cambiar-Inactivo</button>
+</div>
         <form className="space-y-0" onSubmit={handleSubmit}>
 
 <div className="py-4 flex items-center border-b border-gray-100">
@@ -247,13 +248,8 @@ function handleList  (e)  {
     onChange={handleChange}
     className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
   />
-  <div className="py-4 flex items-center border-b border-gray-100">
-      <select  name="estado" value={formData.estado} onChange={(e) => setFormData(e.target.value)}>
-        <option value="true"onChange={handleChange}>Activo</option>
-        <option value="false" onChange={handleChange}>Inactivo</option>
-      </select>
-    </div>
 </div>
+
 
       <div className="modal-footer">
         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

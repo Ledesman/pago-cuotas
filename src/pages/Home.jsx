@@ -45,7 +45,7 @@ const Home = ({token}) => {
    
     </div>
     <div className="container">
-        <h2 className="text-3xl font-bold underline">Lista de clientes </h2>
+       
         <FormList />
     </div>
        

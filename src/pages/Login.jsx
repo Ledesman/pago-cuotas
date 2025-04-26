@@ -51,63 +51,56 @@ function handleChange(e) {
   return(
     <>
 
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        
-        
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+<div className="flex flex-col items-center justify-center min-h-screen p-4 bg-white">
+<div className="w-full max-w-md space-y-8">
+        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+        Bienvenido a tu cuenta
+            </h2>
         
         <img
               alt="Your Company"
               src= {logo}
               className="mx-auto h-10 w-auto"
+               width={50} height={50}
             />
-        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-        Bienvenido a tu cuenta
-            </h2>
-            </div>
-            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-              
+       
+        
+        <div className="mt-12 space-y-6"></div>
         <form className="space-y-6" onSubmit={handleSubmit} >
-
-        <div >
-        <label className="block text-sm/6 font-medium text-gray-900" >Correo</label>
-        <div className="mt-2">
-            <input  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+        
+        <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-900" >Correo</label>
+        
+            <input  className="w-full h-14 px-4 rounded-md border border-gray-300"
              type="email" name="email"
              id="email" 
             placeholder='hola@gmail.com'
             onChange={handleChange}
            />
         </div>
-        </div>
-        <div className="flex items-center justify-between">
+        <div className="space-y-2">
             
-            <label className="block text-sm/6 font-medium text-gray-900">
-              Password</label>
-              <div className="text-sm">
-                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                      Forgot password?
-                    </a>
-                  </div>
-        </div>
-        <div className="mt-2">
-
-            <input  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+            <label className="block text-sm font-medium text-gray-900">
+            Contraseña
+            </label>
+              
+            <input  className="w-full h-14 px-4 rounded-md border border-gray-300"
              type="password" name="password"
              id="password" 
              onChange={handleChange}/>
         </div>
-        
+        <div className="flex justify-end mb-6">
+            <Link to="/signup" className="text-blue-500 text-sm hover:underline">
+            No tengo Registro
+            </Link>
+          </div>
+      
         <br />
-            <button className='btn btn-outline-primary justify-between' type="submit">Login</button>
+            <button className='w-full bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 transition-colors' type="submit">Iniciar sesion</button>
             
         </form>
-            </div>
-        <br />
-        
-        <p>No tengo Registro<span><Link to="/signup">Ir_Registrar</Link></span></p>
-        </div>
-        
+     </div>
+      </div>
        
     </>
   )

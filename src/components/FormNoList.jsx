@@ -1,5 +1,5 @@
 
-import React,{useEffect} from 'react'
+import React,{useEffect, useState} from 'react'
 import { useForms } from '../context/FormContext'
 import {  useNavigate } from 'react-router-dom';
 
@@ -8,17 +8,91 @@ function FormNoList() {
 
    let navigate = useNavigate();
 
-const { forms, getFormsFalse } = useForms();
+const { forms, getFormsFalse ,loading, updateForm, StateForm} = useForms();
+const [formData, setFormData] = useState({
+            id: '',
+            nombre: '',
+            apellido: '',
+            montoPagar: '',
+            fechaPago: '',
+            numerCotas: '',
+            mes: '',
+            cuota_act: '',
+            observacion: '',
+            estado: Boolean,
+            created_at: new Date(),
+            
+
+        });
 
 useEffect(() =>{
   getFormsFalse()
 }, [])
-
+if (loading) {
+  return <p>Cargando...</p>
+}else if(forms.length === 0){
+  return <p>No Tenemos clientes con Bajas ./</p>
+}
 function handleList  (e)  {
     e.preventDefault();
     navigate("/")
 }
-    console.log(forms);
+function handleStado (userId) {
+  forms.map((form) =>{
+    if (form.id == userId) {
+      
+      setFormData({
+        id: form.id,
+        nombre:form.nombre,
+        apellido:form.apellido,
+        montoPagar:form.montoPagar,
+        fechaPago:form.fechaPago,
+        numerCotas:form.numerCotas,
+        mes:form.mes,
+        cuota_act:form.cuota_act,
+        observacion:form.observacion,
+        estado:form.estado
+        
+      })
+      
+    }
+
+  })
+}
+    function handleChange(e) {
+      setFormData((preventFormdata)=>{
+       return {
+         ...preventFormdata,
+         [e.target.name]: e.target.value
+       }
+       
+      })
+     }
+     const handleSubmit = async (e) =>{
+      e.preventDefault();
+      updateForm(formData.id,{
+  
+        nombre: formData.nombre,
+        apellido: formData.apellido,
+        montoPagar: formData.montoPagar,
+        fechaPago: formData.fechaPago,
+        numerCotas: formData.numerCotas,
+        mes: formData.mes,
+        cuota_act: formData.cuota_act,
+        observacion: formData.observacion,
+        estado: formData.estado,
+      })
+      
+      
+      alert(' Este cliente se encuentra actualiazado correctamente ')
+      navigate('/');
+    }
+    const handleChangeState = () =>{
+      StateForm(formData.id, {estado: !formData.estado})
+      alert('Cambio de estado del cliente')
+      navigate('/');
+    
+    }
   return (
     <>
          
@@ -26,12 +100,159 @@ function handleList  (e)  {
 
       <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-8">
-        <p className="text-gray-700">Bajas de clientes.</p>
+        <p className="text-gray-700 font-bold underline">Bajas de clientes</p>
         <button className="btn btn-outline-success" onClick={handleList}>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
   <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1"/>
 </svg></button>
       </div>
+      <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div className="modal-dialog">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h1 className="modal-title fs-5" id="exampleModalLabel">Editar Cliente</h1>
+        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div className="modal-body">
+      <div className="py-4 flex items-center border-b border-gray-100">
+  <label htmlFor="estado" className="w-1/3 text-gray-800 font-medium">
+    Estado
+  </label>
+  <input
+    id="estado"
+    name='estado'
+    type="hidden"
+    defaultValue={formData.estado}
+    onChange={handleChange}
+    className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
+  />
+ <button onClick={() => handleChangeState()} className='btn btn-outline-light p-2 m-4 'data-bs-dismiss="modal">Cambiar-Activo</button>
+</div>
+        <form className="space-y-0" onSubmit={handleSubmit}>
+
+<div className="py-4 flex items-center border-b border-gray-100">
+  <input type="text" name='id' onChange={handleChange} defaultValue={formData.id}/>
+  <label htmlFor="nombre" className="w-1/3 text-gray-800 font-medium">
+  Nombre
+  </label>
+  <input
+    id="nombre"
+    type="text"
+    className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
+    onChange={handleChange}
+    name='nombre'
+   defaultValue={formData.nombre}
+     
+  />
+</div>
+<div className="py-4 flex items-center border-b border-gray-100">
+  <label htmlFor="apellido" className="w-1/3 text-gray-800 font-medium">
+  Apellido
+  </label>
+  <input
+    id="apellido"
+    type="text"
+    name='apellido'
+    className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
+    onChange={handleChange}
+   defaultValue={formData.apellido}        />
+</div>
+
+<div className="py-4 flex items-center border-b border-gray-100">
+  <label htmlFor="montoPagar" className="w-1/3 text-gray-800 font-medium">
+  Monto a pagar
+  </label>
+  <input
+    id="montoPagar"
+    type="number"
+    name='montoPagar'
+    className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
+    defaultValue={formData.montoPagar}
+    onChange={handleChange}
+    
+ />
+</div>
+<div className="py-4 flex items-center border-b border-gray-100">
+  <label htmlFor="fechaPago" className="w-1/3 text-gray-800 font-medium">
+  Fecha de pago
+  </label>
+  <input
+    id="fechaPago"
+    type="text"
+    name='fechaPago'
+    className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
+    defaultValue={formData.fechaPago}
+    onChange={handleChange}
+  
+ />
+</div>
+<div className="py-4 flex items-center border-b border-gray-100">
+  <label htmlFor="numerCotas" className="w-1/3 text-gray-800 font-medium">
+  Numero de cuotas
+  </label>
+  <input
+    id="numerCotas"
+    name='numerCotas' 
+    type="text"
+    className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
+    defaultValue={formData.numerCotas}
+    onChange={handleChange}
+ />
+  </div>
+  <div className="py-4 flex items-center border-b border-gray-100">
+  <label htmlFor="mes" className="w-1/3 text-gray-800 font-medium">
+  Mes
+  </label>
+  <input
+    id="mes"
+    type="text"
+    name='mes'
+    className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
+    defaultValue={formData.mes}
+    onChange={handleChange}
+ />
+</div>
+<div className="py-4 flex items-center border-b border-gray-100">
+  <label htmlFor="cuota_act" className="w-1/3 text-gray-800 font-medium">
+    Cuota Actual
+  </label>
+  <input
+    id="cuota_act"
+    name='cuota_act'
+    type="number"
+    defaultValue={formData.cuota_act}
+    onChange={handleChange}
+    className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
+  />
+</div>
+<div className="py-4 flex items-center border-b border-gray-100">
+  <label htmlFor="observacion" className="w-1/3 text-gray-800 font-medium">
+    Observacion
+  </label>
+  <input
+    id="observacion"
+    name='observacion'
+    type="text"
+    defaultValue={formData.observacion}
+    onChange={handleChange}
+    className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
+  />
+</div>
+
+      <div className="modal-footer">
+        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" className='btn btn-outline-success p-2 m-4 '>Guardar</button>
+      </div>
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
       <div className="overflow-hidden border-b border-gray-200 rounded-lg">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-white">
@@ -89,9 +310,9 @@ function handleList  (e)  {
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span>{cli.observacion}</span></td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                               </td>  
-                                <a href="#" className="btn btn-outline-warning hover:text-indigo-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                <button data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => handleStado(cli.id)} className="btn btn-outline-warning hover:text-indigo-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
   <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
-</svg>Edit</a>
+</svg>Edit</button>
                             
                         </tr>
                     ))

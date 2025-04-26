@@ -64,6 +64,7 @@ export const FormContextProvider = ({children}) => {
 
     }
     const getFormsFalse = async (estado = false) => {
+        setLoading(true)
         const user = await supabase.auth.getUser();
     
         console.log(user.data.user);
@@ -74,8 +75,31 @@ export const FormContextProvider = ({children}) => {
      setForms(data);
       if (error) throw error;
      // return data;
+     setLoading(false)
     }
-
+    const StateForm = async (id, updateState) =>{
+        console.log(id, updateState)
+        try {
+            const { data, error } = await supabase
+              .from('pagos')
+              .update(updateState)
+              .eq('id', id)
+              .select();
+      
+            if (error) {
+              throw error
+            }
+      
+            // Actualiza el estado local 'items' para reflejar el cambio inmediatamente
+            setForms(prevItems =>
+              prevItems.map(item => (item.id === id ? { ...item, ...data[0] } : item))
+            );
+      
+            setForms(data[0]);
+          } catch (err) {
+           console.log(err)
+          }
+    }
     const deleteForm = async (id) =>{
         const user = await supabase.auth.getUser();
     
@@ -115,7 +139,7 @@ export const FormContextProvider = ({children}) => {
        
     }
 
-    return (<FormContext.Provider value={{forms, getForms, createForm, getFormsFalse, deleteForm,updateForm, adding, loading}}>
+    return (<FormContext.Provider value={{forms, getForms, createForm, getFormsFalse, deleteForm,updateForm, StateForm, adding, loading}}>
         {children}
         </FormContext.Provider>
     )

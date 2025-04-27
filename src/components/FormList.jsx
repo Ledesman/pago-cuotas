@@ -42,7 +42,7 @@ function handleList  (e)  {
     
 
     const handleDelete = (id) => {
-      alert('Eliminando');
+      alert('Eliminando correctamente');
       deleteForm(id);
     }
     function handleStado (userId) {
@@ -97,7 +97,7 @@ function handleList  (e)  {
      }
   const handleChangeState = () =>{
     StateForm(formData.id, {estado: !formData.estado})
-    alert('Cambio de estado del cliente no Activo')
+    alert('Cambio de estado del cliente No Activo')
     navigate('/vertodo');
   }
   return (

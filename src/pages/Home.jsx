@@ -28,7 +28,7 @@ const Home = ({token}) => {
 <div className="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
   <div className="offcanvas-header">
     <h5 classn="offcanvas-title" id="offcanvasTopLabel">Listo para salir</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
   <button className=" btn btn-outline-danger" onClick={handleLogout}>

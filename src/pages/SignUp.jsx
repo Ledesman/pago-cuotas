@@ -67,7 +67,7 @@ function handleChange(e) {
         </div>
         <div className="col-md-6">
             <br />
-            <label className="form-label">Password</label>
+            <label className="form-label">Contraseña</label>
             <input className="form-control" type="password" name="password"
              id="password" 
              onChange={handleChange}/>

@@ -69,7 +69,7 @@ function handleChange(e) {
         <form className="space-y-6" onSubmit={handleSubmit} >
         
         <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-900" >Correo</label>
+        <label className="block text-sm font-medium text-gray-900">Correo</label>
         
             <input  className="w-full h-14 px-4 rounded-md border border-gray-300"
              type="email" name="email"

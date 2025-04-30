@@ -1,0 +1,19 @@
+[
+    {
+        "id": 1,
+        "name": "1 al 5",
+        "incremnt": 8
+    },{
+        "id": 2,
+        "name": "1 al 10",
+        "incremnt": 10
+    },{
+        "id": 3,
+        "name": "1 al 15",
+        "incremnt": 8.4
+    },{
+        "id": 4,
+        "name": "15 al 28",
+        "incremnt": 10
+    }
+]

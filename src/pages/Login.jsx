@@ -1,7 +1,7 @@
 import React, { useState} from 'react';
 import { supabase } from '../supabase/client';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from "../image/descarga.jpg";
+import logo from "../image/logotzt.jpg";
 import "../App.css"
 
 

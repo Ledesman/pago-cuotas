@@ -1,8 +1,68 @@
+import React,{ useState} from 'react'
+import {  useNavigate } from 'react-router-dom';
+function PagosForm() {
+  let navigate = useNavigate();
 
-export default function Example() {
-    return (
-      <>
-  <div style={{ display: 'flex', maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [address1, setAddress1] = useState('');
+    const [address2, setAddress2] = useState('');
+    const [country, setCountry] = useState('');
+    const [state, setState] = useState('');
+    const [zip, setZip] = useState('');
+    const [promoCode, setPromoCode] = useState('');
+    const [total, setTotal] = useState(20); // Initial total from the image
+  
+    function handleVolver  (e)  {
+      e.preventDefault();
+      navigate("/")
+  }
+
+
+    const products = [
+        { name: 'Product name', description: 'Brief description', price: 12 },
+        { name: 'Second product', description: 'Brief description', price: 8 },
+        { name: 'Third item', description: 'Brief description', price: 5 },
+      ];
+      const handlePromoCode = () => {
+        if (promoCode.toUpperCase() === 'EXAMPLECODE') {
+          setTotal(total - 5);
+        } else {
+          alert('Invalid promo code.');
+        }
+      };
+    
+      const handleSubmit = (event) => {
+        event.preventDefault();
+        // Process the form data here
+        console.log({
+          firstName,
+          lastName,
+          username,
+          email,
+          address1,
+          address2,
+          country,
+          state,
+          zip,
+        });
+        alert('Order submitted!');
+      };
+  return (
+    <div>
+      Forlularios de Pagos
+      
+      <div className="container mx-auto p-4">
+      <div className="flex justify-between items-center mb-8">
+
+      <button className="btn btn-outline-success" onClick={handleVolver}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+  <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1"/>
+</svg></button>
+      </div>
+      <div style={{ display: 'flex', maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
       <div style={{ flex: 1, marginRight: '20px' }}>
         <h2>Billing address</h2>
         <form onSubmit={handleSubmit}>
@@ -156,6 +216,10 @@ export default function Example() {
         </div>
       </div>
     </div>
-      </>
-    )
-  }
+
+    </div>
+    </div>
+  )
+}
+
+export default PagosForm

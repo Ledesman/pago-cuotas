@@ -16,7 +16,7 @@ const Navbar = () => {
                 {/* <a href="/">Home</a> */}
                 <a href="/add">Agregar</a>
                 <a href="/vertodo">Ver Todos Bajas</a>
-                <a href="/pagos">Pagos</a>
+                {/* <a href="/pagos">Pagos</a> */}
               
            
         </nav>

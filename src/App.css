@@ -79,3 +79,30 @@
   font-weight: 500;
   margin-left: 40px;
 }
+.notification {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  font-size: 1.2rem;
+  text-align: center;
+}
+.notice-1 {
+  border-left: 6px solid #3498db;
+  color: #21618c;
+}
+.notice-2 {
+  border-left: 6px solid #f39c12;
+  color: #9a6c0a;
+}
+.notice-3 {
+  border-left: 6px solid #e74c3c;
+  color: #922b21;
+}
+.suba-cuotas {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #c0392b;
+}

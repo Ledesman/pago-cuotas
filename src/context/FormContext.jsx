@@ -35,6 +35,22 @@ export const FormContextProvider = ({children}) => {
     
       
     }
+    const fechtClientes = async () =>{
+      try {
+        const {data, error} = await supabase.from('pagos')
+        .select(`
+          *,
+         clientes(
+        * )
+          `)
+          if (data) {
+            console.log(data)
+          }
+          if (error) throw error;
+      } catch (error) {
+        console.log(error)        
+      }
+    }
     const createForm = async (formData) =>{
         
         try {
@@ -139,7 +155,8 @@ export const FormContextProvider = ({children}) => {
        
     }
 
-    return (<FormContext.Provider value={{forms, getForms, createForm, getFormsFalse, deleteForm,updateForm, StateForm, adding, loading}}>
+    return (<FormContext.Provider value={{forms, getForms, createForm, getFormsFalse, deleteForm,updateForm,
+    fechtClientes, StateForm, adding, loading}}>
         {children}
         </FormContext.Provider>
     )

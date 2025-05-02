@@ -4,6 +4,8 @@ import Navbar from '../components/Navbar';
 
 import FormList from '../components/FormList';
 
+import FechaComparacionAlertaConDateFns from '../components/ui/FechaComparacionAlertaConDateFns';
+
 const Home = ({token}) => {
 
     let navigate = useNavigate();
@@ -44,6 +46,7 @@ const Home = ({token}) => {
     
    
     </div>
+   
     <div className="container">
        
         <FormList />

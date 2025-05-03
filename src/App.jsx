@@ -6,6 +6,7 @@ import EditForm from './components/EditForm';
 import Pagos from './components/PagosForm'
 import { Routes, Route } from 'react-router-dom';
 import { FormContextProvider } from './context/FormContext';
+import { ClientContextProvider } from './context/ClienteContext';
 import './App.css';
 
 
@@ -32,7 +33,8 @@ const App = () => {
   
    
     <FormContextProvider>
- 
+    <ClientContextProvider>
+
   <Routes>
     {token?<Route path="/" element={<Home token={token} />} />:""}
     <Route path="/signup" element={<SignUp />} />
@@ -45,6 +47,8 @@ const App = () => {
   
 
   </Routes>
+
+    </ClientContextProvider>
 
     </FormContextProvider>
  

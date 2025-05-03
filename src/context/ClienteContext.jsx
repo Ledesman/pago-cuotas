@@ -2,33 +2,33 @@ import { createContext, useContext, useState  } from "react";
 import { supabase } from "../supabase/client";
 
 
-export const FormContext = createContext();
+export const ClientContext = createContext();
 
-export const useForms = () =>{
-    const context = useContext(FormContext)
+export const useClients = () =>{
+    const context = useContext(ClientContext)
     if (!context)
-    throw new Error("useForms must be used within a FormContextProvider")
+    throw new Error("useClients must be used within a FormContextProvider")
     // if (!context) {
     return context;
 }
 
-export const FormContextProvider = ({children}) => {
+export const ClientContextProvider = ({children}) => {
 
-    const [forms, setForms] = useState([]);
+    const [clients, setclients] = useState([]);
     const [adding, setadding] = useState(false);
     const [loading, setLoading] = useState(false);
     // Removed unused error state
 
-    const getForms = async (estado = true) => {
+    const getclients = async () => {
         setLoading(true)
-        const user = await supabase.auth.getUser();
+        // const user = await supabase.auth.getUser();
     
-          console.log(user.data.user);
-     const {data, error} = await supabase.from("pagos").select()
-     .eq("estado", estado)
+        //   console.log(user.data.user);
+     const {data, error} = await supabase.from("clientes").select()
+     
         .order("id", { ascending: true });
 
-       setForms(data);
+       setclients(data);
         if (error) throw error;
        // return data;
        setLoading(false)
@@ -37,13 +37,14 @@ export const FormContextProvider = ({children}) => {
     }
     const fechtClientes = async () =>{
       try {
-        const {data, error} = await supabase.from('pagos')
+        const {data, error} = await supabase.from('clientes')
         .select(`
           *,
-         clientes(
+         pagos(
         * )
           `)
           if (data) {
+            setclients(data);
             console.log(data)
           }
           if (error) throw error;
@@ -79,7 +80,7 @@ export const FormContextProvider = ({children}) => {
         }
 
     }
-    const getFormsFalse = async (estado = false) => {
+    const getclientsFalse = async (estado = false) => {
         setLoading(true)
         const user = await supabase.auth.getUser();
     
@@ -88,7 +89,7 @@ export const FormContextProvider = ({children}) => {
    .eq("estado", estado)
       .order("id", { ascending: true });
 
-     setForms(data);
+     setclients(data);
       if (error) throw error;
      // return data;
      setLoading(false)
@@ -107,11 +108,11 @@ export const FormContextProvider = ({children}) => {
             }
       
             // Actualiza el estado local 'items' para reflejar el cambio inmediatamente
-            setForms(prevItems =>
+            setclients(prevItems =>
               prevItems.map(item => (item.id === id ? { ...item, ...data[0] } : item))
             );
       
-            setForms(data[0]);
+            setclients(data[0]);
           } catch (err) {
            console.log(err)
           }
@@ -125,9 +126,9 @@ export const FormContextProvider = ({children}) => {
        .eq("id", id)
 
        if(error) throw error
-        setForms(
+        setclients(
 
-            forms.filter(form => form.id !== id)
+            clients.filter(form => form.id !== id)
         )
        console.log(data)
     }
@@ -144,7 +145,7 @@ export const FormContextProvider = ({children}) => {
             }
       
             // Actualiza el estado local 'items' para reflejar el cambio inmediatamente
-            setForms(prevItems =>
+            setclients(prevItems =>
               prevItems.map(item => (item.id === id ? { ...item, ...data[0] } : item))
             );
       
@@ -155,10 +156,10 @@ export const FormContextProvider = ({children}) => {
        
     }
 
-    return (<FormContext.Provider value={{forms, getForms, createForm, getFormsFalse, deleteForm,updateForm,
+    return (<ClientContext.Provider value={{clients, getclients, createForm, getclientsFalse, deleteForm,updateForm,
     fechtClientes, StateForm, adding, loading}}>
         {children}
-        </FormContext.Provider>
+        </ClientContext.Provider>
     )
 }
 

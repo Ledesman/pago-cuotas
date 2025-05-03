@@ -1,16 +1,28 @@
 
 import React,{useEffect, useState} from 'react'
 import { useForms } from '../context/FormContext'
+import { useClients } from '../context/ClienteContext'
 import {  useNavigate } from 'react-router-dom';
 import  NotificacionesCli  from '../components/ui/NotificacionesCli';
+
 
 
 function FormList() {
 
    let navigate = useNavigate();
- 
+
 
 const { forms, getForms, loading, deleteForm, updateForm, StateForm } = useForms();
+const { clients, fechtClientes } = useClients();
+const [ setClientData] = useState({
+  id: '',
+  mensaje: '',
+  incremento: '',
+  id_clientes: '',
+  fechaPago: '',
+  created_at: new Date(),
+
+});
 const [formData, setFormData] = useState({
             id: '',
             nombre: '',
@@ -23,36 +35,37 @@ const [formData, setFormData] = useState({
             observacion: '',
             estado: Boolean,
             created_at: new Date(),
-            
+            id_clientes: ''
 
         });
-  
+
 useEffect(() =>{
     getForms()
-    
+    fechtClientes()
+
 }, [])
 if (loading) {
   return <p>Cargando...</p>
 }else if(forms.length === 0){
   return <p>No Tenemos cargados clientes ./</p>
- 
+
 }
 
 function handleList  (e)  {
     e.preventDefault();
     navigate("/add")
 }
-    
+
 
     const handleDelete = (id) => {
       alert('Eliminando correctamente');
       deleteForm(id);
     }
     function handleStado (userId) {
-      
+
       forms.map((form) =>{
         if (form.id == userId) {
-          
+
           setFormData({
             id: form.id,
             nombre:form.nombre,
@@ -63,14 +76,32 @@ function handleList  (e)  {
             mes:form.mes,
             cuota_act:form.cuota_act,
             observacion:form.observacion,
-            estado:form.estado
-            
+            estado:form.estado,
+            id_clientes: form.id_clientes
           })
         }
 
       })
     }
+  function handleClient (clientId) {
 
+     handleStado(clientId)
+
+
+    clients.map((client) =>{
+      if (client.id == clientId){
+        setClientData({
+          id: client.id,
+          mensaje: client.mensaje,
+          incremento: client.incremento,
+          id_clientes: client.id_clientes,
+          fechaPago: client.fechaPago,
+
+        })
+          console.log(clients.id_clientes)
+      }
+    })
+  }
  const handleSubmit = async (e) =>{
     e.preventDefault();
     updateForm(formData.id,{
@@ -85,8 +116,8 @@ function handleList  (e)  {
       observacion: formData.observacion,
       estado: formData.estado,
     })
-    
-    
+
+
     alert('Cliente actualiazado correctamente')
     navigate('/');
   }
@@ -96,9 +127,18 @@ function handleList  (e)  {
          ...preventFormdata,
          [e.target.name]: e.target.value
        }
-       
+
       })
      }
+    //  function handleChangeCli(e) {
+    //   setClientData((preventFormdata)=>{
+    //    return {
+    //      ...preventFormdata,
+    //      [e.target.name]: e.target.value
+    //    }
+
+    //   })
+    //  }
   const handleChangeState = () =>{
     StateForm(formData.id, {estado: !formData.estado})
     alert('Cambio de estado del cliente No Activo')
@@ -109,15 +149,39 @@ function handleList  (e)  {
     <>
 
 
-<div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Datos de este cliente</h5>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+<div className="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+  <div className="offcanvas-header">
+    <h5 className="offcanvas-title" id="offcanvasBottomLabel">Datos de este cliente</h5>
+    <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
-  <div class="offcanvas-body small">
+  {
+
+  }
+  <div className="offcanvas-body small">
     <p> {formData.id}</p>
-  <h5 class="card-title">El cliente {formData.nombre} de apellido {formData.apellido}  </h5>
-  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  <h5 className="card-title">El cliente {formData.nombre} de apellido {formData.apellido}  </h5>
+  <p className="card-text">El cliente tiene un monto a pagar de {formData.montoPagar} y la fecha de pago es {formData.fechaPago}</p>
+  <p className="card-text">El cliente tiene un total de {formData.numerCotas} cuotas y la cuota actual es {formData.cuota_act}</p>
+ {
+  formData.estado ? <p className="card-text">El cliente esta activo</p> : <p className="card-text">El cliente no esta activo</p>
+ }
+ {
+  formData.observacion ? <p className="card-text">El cliente tiene una observacion {formData.observacion}</p> : <p className="card-text">El cliente no tiene observaciones</p>
+ }
+  {
+         clients.map(client => (
+            <p className="card-text" key={client.id}>
+              {parseInt(client.id_clientes) === parseInt(formData.id_clientes) ? (
+                <span>El cliente tiene un mensaje {client.mensaje} y el incremento es {client.incremento}</span>
+              ) : (
+                <span>El cliente no tiene mensaje</span>
+              )}
+            </p>
+         ))
+  }
+
+
+  <p class="card-text">¡Gracias por ser parte de nuestra historia!</p>
   </div>
 </div>
          <NotificacionesCli />
@@ -133,7 +197,7 @@ function handleList  (e)  {
 </svg></button>
       </div>
       {/* <!-- Button trigger modal --> */}
-     
+
 <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div className="modal-dialog">
     <div className="modal-content">
@@ -174,7 +238,7 @@ function handleList  (e)  {
     onChange={handleChange}
     name='nombre'
    defaultValue={formData.nombre}
-     
+
   />
 </div>
 <div className="py-4 flex items-center border-b border-gray-100">
@@ -201,7 +265,7 @@ function handleList  (e)  {
     className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
     defaultValue={formData.montoPagar}
     onChange={handleChange}
-    
+
  />
 </div>
 <div className="py-4 flex items-center border-b border-gray-100">
@@ -215,7 +279,7 @@ function handleList  (e)  {
     className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
     defaultValue={formData.fechaPago}
     onChange={handleChange}
-  
+
  />
 </div>
 <div className="py-4 flex items-center border-b border-gray-100">
@@ -224,7 +288,7 @@ function handleList  (e)  {
   </label>
   <input
     id="numerCotas"
-    name='numerCotas' 
+    name='numerCotas'
     type="text"
     className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
     defaultValue={formData.numerCotas}
@@ -293,7 +357,7 @@ function handleList  (e)  {
               </th>
               <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-900 tracking-wider">
                 Fechas de Pago
-              </th> 
+              </th>
               <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-900 tracking-wider">
               Numero de Cuotas
               </th>
@@ -331,7 +395,7 @@ function handleList  (e)  {
                                 </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span>{cli.fechaPago}</span></td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span>{cli.numerCotas}</span></td> 
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span>{cli.numerCotas}</span></td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span>{cli.mes}</span></td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span>{cli.cuota_act}</span></td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span>{cli.created_at}</span></td>
@@ -339,21 +403,21 @@ function handleList  (e)  {
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <button data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => handleStado(cli.id)} className="btn btn-outline-warning px-6 py-4 whitespace-nowrap"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
   <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
-</svg>Editar</button>     
-   <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onClick={() => handleStado(cli.id)} className="btn btn-outline-light px-6 py-4 whitespace-nowrap"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+</svg>Editar</button>
+   <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onClick={() => handleClient(cli.id)} className="btn btn-outline-light px-6 py-4 whitespace-nowrap"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
   <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
   <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
 </svg>Ver</button>
                       <button onClick={() => handleDelete(cli.id)}  className="btn btn-outline-danger px-6 py-4 whitespace-nowrap"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
   <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
 </svg>Borrar</button>
-                              </td>  
-                            
+                              </td>
+
                         </tr>
                     ))
                 }
-          
-            
+
+
           </tbody>
         </table>
       </div>

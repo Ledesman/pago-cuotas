@@ -43,6 +43,7 @@ export const FormContextProvider = ({children}) => {
          clientes(
         * )
           `)
+          
           if (data) {
             console.log(data)
           }

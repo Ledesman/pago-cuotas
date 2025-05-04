@@ -2,6 +2,7 @@ import { createContext, useContext, useState  } from "react";
 import { supabase } from "../supabase/client";
 
 
+
 export const FormContext = createContext();
 
 export const useForms = () =>{
@@ -68,6 +69,7 @@ export const FormContextProvider = ({children}) => {
                 created_at: new Date(),
                 observacion: formData.observacion,
                 estado: true,
+                id_cliente: formData.id_cliente,
                 uuid: user.id
             });
             if (error) throw error;

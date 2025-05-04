@@ -17,6 +17,7 @@ const AddForm = () => {
             mes: '',
             cuota_act: 0,
             observacion: '',
+            id_clientes: 0,
             created_at: new Date(),
             
 
@@ -45,7 +46,9 @@ const AddForm = () => {
             mes: '',
             cuota_act: 0,
             observacion: '',
+            id_clientes: 0,
             created_at: new Date(),
+            
         });
         alert("Cliente agregado con exito");
         navigate("/");
@@ -71,6 +74,8 @@ const AddForm = () => {
         Formulario de Clientes
             </h1>
             <div className="max-w-3xl mx-auto p-6">
+
+       
 
         <form className="space-y-0" onSubmit={handleSubmit}>
 
@@ -127,6 +132,19 @@ const AddForm = () => {
             onChange={handleChange}
          />
         </div>
+        <div class="col-md">
+        <div class="form-floating">
+        <select  class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+        <option id="fechaPago"  name='fechaPago'  onChange={handleChange} selected>Seleccion de menu Fecha Pagos</option>
+        <option value="1 al 5">1 al 5</option>
+        <option value="1 al 10">1 al 10</option>
+        <option value="1 al 15">1 al 15</option>
+        <option value="1 al 20">1 al 20</option>
+        <option value="15 al 30">15 al 30</option>
+        </select>
+        <label for="floatingSelectGrid">Fechas de Pagos de los Clientes</label>
+        </div>
+        </div>
         <div className="py-4 flex items-center border-b border-gray-100">
           <label htmlFor="numerCotas" className="w-1/3 text-gray-800 font-medium">
           Numero de cuotas
@@ -179,6 +197,19 @@ const AddForm = () => {
             className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
           />
         </div>
+        <div class="col-md">
+        <div class="form-floating">
+        <select  name='id_clientes'  onChange={handleChange} class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+        <option selected>Seleccion de menu Tipo Cliente</option>
+        <option value="1">Exelente</option>
+        <option value="2">Muy Bueno</option>
+        <option value="3">Bueno</option>
+        <option value="4">Regular</option>
+        <option value="5">Mal</option>
+        </select>
+        <label for="floatingSelectGrid">Tipo de Clientes</label>
+        </div>
+        </div>
         <div class="d-grid gap-2 col-6 mx-auto">
 
        <button disabled={adding}
@@ -186,11 +217,12 @@ const AddForm = () => {
          {adding ? "Cargando..." : "Agregar"}
        </button>
         </div>
+
         </form>
 
-            </div>
 
-</div>
+        </div>
+    </div>
     </div>
 
 
@@ -198,7 +230,70 @@ const AddForm = () => {
 
     )
 }
+     {/* <form action="">Datos del cliente
 
+<div class="row g-2">
+   <div class="col-md">
+<div class="form-floating">
+<select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+<option selected>Seleccion de menu Mensaje</option>
+<option value="Pago sin demora">Pago sin demora</option>
+<option value="Pago frecuente">Pago frecuente</option>
+<option value="pago con demora ">Pago con demora </option>
+<option value="Pago tardio">Pago tardio</option>
+<option value="critico">Critico</option>
+</select>
+<label for="floatingSelectGrid">Mensaje</label>
+</div>
+</div>
+<div class="col-md">
+<div class="form-floating">
+<select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+<option selected>Seleccion de menu Incremento</option>
+<option value="0">Cero</option>
+<option value="0">Cero</option>
+<option value="8.4">8.4</option>
+<option value="8.5">8.5</option>
+<option value="10">10</option>
+</select>
+<label for="floatingSelectGrid">Incremento</label>
+</div>
+</div>
+<div class="col-md">
+<div class="form-floating">
+<select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+<option selected>Seleccion de menu Tipo Cliente</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+</select>
+<label for="floatingSelectGrid">Tipo de Clientes</label>
+</div>
+</div>
+<div class="col-md">
+<div class="form-floating">
+<select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+<option selected>Seleccion de menu Fecha Pagos</option>
+<option value="1 al 5">1 al 5</option>
+<option value="1 al 10">1 al 10</option>
+<option value="1 al 15">1 al 15</option>
+<option value="1 al 20">1 al 20</option>
+<option value="15 al 30">15 al 30</option>
+</select>
+<label for="floatingSelectGrid">Fechas de Pagos de los Clientes</label>
+</div>
+</div>
+</div> 
+<div class="d-grid gap-2 col-6 mx-auto">
+
+<button disabled={adding}
+className='btn btn-outline-success p-2 m-4 ' type="submit">
+ {adding ? "Cargando..." : "CargarDatos"}
+</button>
+</div>
+</form>*/}
 
 
 export default AddForm;

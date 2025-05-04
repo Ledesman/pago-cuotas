@@ -115,6 +115,7 @@ function handleList  (e)  {
       cuota_act: formData.cuota_act,
       observacion: formData.observacion,
       estado: formData.estado,
+      id_clientes: formData.id_clientes,
     })
 
 
@@ -130,15 +131,7 @@ function handleList  (e)  {
 
       })
      }
-    //  function handleChangeCli(e) {
-    //   setClientData((preventFormdata)=>{
-    //    return {
-    //      ...preventFormdata,
-    //      [e.target.name]: e.target.value
-    //    }
-
-    //   })
-    //  }
+   
   const handleChangeState = () =>{
     StateForm(formData.id, {estado: !formData.estado})
     alert('Cambio de estado del cliente No Activo')
@@ -174,7 +167,7 @@ function handleList  (e)  {
               {parseInt(client.id_clientes) === parseInt(formData.id_clientes) ? (
                 <span>El cliente tiene un mensaje {client.mensaje} y el incremento es {client.incremento}</span>
               ) : (
-                <span>El cliente no tiene mensaje</span>
+                <span>El cliente "no" tiene mensaje</span>
               )}
             </p>
          ))
@@ -221,9 +214,6 @@ function handleList  (e)  {
  <button onClick={() => handleChangeState()} className='btn btn-outline-light p-2 m-4' data-bs-dismiss="modal">Cambiar-Inactivo</button>
 </div>
 
-
-
-
         <form className="space-y-0" onSubmit={handleSubmit}>
 
 <div className="py-4 flex items-center border-b border-gray-100">
@@ -268,20 +258,32 @@ function handleList  (e)  {
 
  />
 </div>
-<div className="py-4 flex items-center border-b border-gray-100">
-  <label htmlFor="fechaPago" className="w-1/3 text-gray-800 font-medium">
-  Fecha de pago
-  </label>
-  <input
-    id="fechaPago"
-    type="text"
-    name='fechaPago'
-    className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
-    defaultValue={formData.fechaPago}
-    onChange={handleChange}
 
- />
-</div>
+<div className="col-md">
+        <div className="form-floating">
+        <select name='fechaPago' onChange={handleChange} defaultValue={formData.fechaPago}  className="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+    <option>Seleccion de menu Fecha Pagos</option> 
+    {
+      clients.map(client => (
+        <option selected key={client.id} value={client.id}>
+          
+          {parseInt(client.id_clientes) === parseInt(formData.id_clientes)}
+             <span>{client.fechaPago}</span>
+         
+        
+       </option>
+      ))
+    }
+    {/* <option value="1 al 10">1 al 10</option>
+    <option value="1 al 15">1 al 15</option>
+    <option value="1 al 20">1 al 20</option>
+    <option value="15 al 30">15 al 30</option> */}
+
+          </select>
+
+        <label for="floatingSelectGrid">Fechas de Pagos de los Clientes</label>
+        </div>
+        </div>
 <div className="py-4 flex items-center border-b border-gray-100">
   <label htmlFor="numerCotas" className="w-1/3 text-gray-800 font-medium">
   Numero de cuotas
@@ -334,6 +336,19 @@ function handleList  (e)  {
     className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
   />
 </div>
+<div class="col-md">
+        <div class="form-floating">
+        <select  name='id_clientes'  onChange={handleChange} className="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+        <option >Seleccion de menu Tipo Cliente</option>
+        <option value="1">Exelente</option>
+        <option value="2">Muy Bueno</option>
+        <option value="3">Bueno</option>
+        <option value="4">Regular</option>
+        <option value="5">Mal</option>
+        </select>
+        <label for="floatingSelectGrid">Tipo de Clientes</label>
+        </div>
+        </div>
 
 
       <div className="modal-footer">

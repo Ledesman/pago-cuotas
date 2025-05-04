@@ -1,6 +1,7 @@
 
 import React,{useEffect, useState} from 'react'
 import { useForms } from '../context/FormContext'
+import { useClients } from '../context/ClienteContext'
 import {  useNavigate } from 'react-router-dom';
 
 
@@ -9,6 +10,17 @@ function FormNoList() {
    let navigate = useNavigate();
 
 const { forms, getFormsFalse ,loading, updateForm, StateForm} = useForms();
+const { clients, fechtClientes } = useClients();
+const [ setClientData] = useState({
+  id: '',
+  mensaje: '',
+  incremento: '',
+  id_clientes: '',
+  fechaPago: '',
+  created_at: new Date(),
+
+});
+
 const [formData, setFormData] = useState({
             id: '',
             nombre: '',
@@ -20,6 +32,7 @@ const [formData, setFormData] = useState({
             cuota_act: '',
             observacion: '',
             estado: Boolean,
+            id_clientes: '',
             created_at: new Date(),
             
 
@@ -27,6 +40,7 @@ const [formData, setFormData] = useState({
 
 useEffect(() =>{
   getFormsFalse()
+  fechtClientes()
 }, [])
 if (loading) {
   return <p>Cargando...</p>
@@ -51,7 +65,8 @@ function handleStado (userId) {
         mes:form.mes,
         cuota_act:form.cuota_act,
         observacion:form.observacion,
-        estado:form.estado
+        estado:form.estado,
+        id_clientes: form.id_clientes
         
       })
       
@@ -59,6 +74,27 @@ function handleStado (userId) {
 
   })
 }
+function handleClient (clientId) {
+
+  handleStado(clientId)
+
+
+ clients.map((client) =>{
+   if (client.id == clientId){
+     setClientData({
+       id: client.id,
+       mensaje: client.mensaje,
+       incremento: client.incremento,
+       id_clientes: client.id_clientes,
+       fechaPago: client.fechaPago,
+
+     })
+       console.log(clients.id_clientes)
+   }
+ })
+}
+
+
     function handleChange(e) {
       setFormData((preventFormdata)=>{
        return {
@@ -85,7 +121,7 @@ function handleStado (userId) {
       
       
       alert(' Este cliente se encuentra actualiazado correctamente ')
-      navigate('/');
+      navigate('/vertodo');
     }
     const handleChangeState = () =>{
       StateForm(formData.id, {estado: !formData.estado})
@@ -128,7 +164,7 @@ function handleStado (userId) {
   />
  <button onClick={() => handleChangeState()} className='btn btn-outline-light p-2 m-4 'data-bs-dismiss="modal">Cambiar-Activo</button>
 </div>
-        <form className="space-y-0" onSubmit={handleSubmit}>
+<form className="space-y-0" onSubmit={handleSubmit}>
 
 <div className="py-4 flex items-center border-b border-gray-100">
   <input type="text" name='id' onChange={handleChange} defaultValue={formData.id}/>
@@ -142,7 +178,7 @@ function handleStado (userId) {
     onChange={handleChange}
     name='nombre'
    defaultValue={formData.nombre}
-     
+
   />
 </div>
 <div className="py-4 flex items-center border-b border-gray-100">
@@ -169,30 +205,42 @@ function handleStado (userId) {
     className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
     defaultValue={formData.montoPagar}
     onChange={handleChange}
-    
+
  />
 </div>
-<div className="py-4 flex items-center border-b border-gray-100">
-  <label htmlFor="fechaPago" className="w-1/3 text-gray-800 font-medium">
-  Fecha de pago
-  </label>
-  <input
-    id="fechaPago"
-    type="text"
-    name='fechaPago'
-    className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
-    defaultValue={formData.fechaPago}
-    onChange={handleChange}
-  
- />
-</div>
+
+<div className="col-md">
+        <div className="form-floating">
+        <select name='fechaPago' onChange={handleChange} defaultValue={formData.fechaPago}  className="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+    <option>Seleccion de menu Fecha Pagos</option> 
+    {
+      clients.map(client => (
+        <option selected key={client.id} value={client.fechaPago}>
+          
+          {parseInt(client.id_clientes) === parseInt(formData.id_clientes)}
+             <span>{client.fechaPago}</span>
+         
+        
+       </option>
+      ))
+    }
+    {/* <option value="1 al 10">1 al 10</option>
+    <option value="1 al 15">1 al 15</option>
+    <option value="1 al 20">1 al 20</option>
+    <option value="15 al 30">15 al 30</option> */}
+
+          </select>
+
+        <label for="floatingSelectGrid">Fechas de Pagos de los Clientes</label>
+        </div>
+        </div>
 <div className="py-4 flex items-center border-b border-gray-100">
   <label htmlFor="numerCotas" className="w-1/3 text-gray-800 font-medium">
   Numero de cuotas
   </label>
   <input
     id="numerCotas"
-    name='numerCotas' 
+    name='numerCotas'
     type="text"
     className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
     defaultValue={formData.numerCotas}
@@ -238,6 +286,20 @@ function handleStado (userId) {
     className="w-2/3 p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200"
   />
 </div>
+<div class="col-md">
+        <div class="form-floating">
+        <select  name='id_clientes'  onChange={handleChange} className="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+        <option >Seleccion de menu Tipo Cliente</option>
+        <option value="1">Exelente</option>
+        <option value="2">Muy Bueno</option>
+        <option value="3">Bueno</option>
+        <option value="4">Regular</option>
+        <option value="5">Mal</option>
+        </select>
+        <label for="floatingSelectGrid">Tipo de Clientes</label>
+        </div>
+        </div>
+
 
       <div className="modal-footer">
         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -313,6 +375,10 @@ function handleStado (userId) {
                                 <button data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => handleStado(cli.id)} className="btn btn-outline-warning hover:text-indigo-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
   <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
 </svg>Edit</button>
+<button data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onClick={() => handleClient(cli.id)} className="btn btn-outline-light px-6 py-4 whitespace-nowrap"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+</svg>Ver</button>
                             
                         </tr>
                     ))

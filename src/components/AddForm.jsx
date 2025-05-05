@@ -199,8 +199,8 @@ const AddForm = () => {
         </div>
         <div class="col-md">
         <div class="form-floating">
-        <select  name='id_clientes'  onChange={handleChange} class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
-        <option selected>Seleccion de menu Tipo Cliente</option>
+        <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+        <option id='id_clientes' name='id_clientes'  onChange={handleChange}>Seleccion de menu Tipo Cliente</option>
         <option value="1">Exelente</option>
         <option value="2">Muy Bueno</option>
         <option value="3">Bueno</option>

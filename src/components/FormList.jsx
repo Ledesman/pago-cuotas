@@ -4,12 +4,20 @@ import { useForms } from '../context/FormContext'
 import { useClients } from '../context/ClienteContext'
 import {  useNavigate } from 'react-router-dom';
 // import  NotificacionesCli  from '../components/ui/NotificacionesCli';
+import Paginacion from './ui/Paginacion';
 
 
 
 function FormList() {
 
    let navigate = useNavigate();
+
+const [formsPage, ] = useState(10)
+const [currentPage, setCurrentPage] = useState(1)
+// const totalForms =  getForms.length
+
+const lastIndex = currentPage * formsPage;
+const firstIndex = lastIndex - formsPage;
 
 
 const { forms, getForms, loading, deleteForm, updateForm, StateForm } = useForms();
@@ -50,6 +58,7 @@ if (loading) {
   return <p>No Tenemos cargados clientes ./</p>
 
 }
+const totalForms =  forms.length
 
 function handleList  (e)  {
     e.preventDefault();
@@ -429,12 +438,16 @@ function handleList  (e)  {
                               </td>
 
                         </tr>
-                    ))
+                    )).slice(firstIndex, lastIndex)
                 }
 
 
           </tbody>
         </table>
+        <Paginacion formsPage={formsPage} 
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage} 
+        totalForms={totalForms} />
       </div>
       </div>
     </>

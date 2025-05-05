@@ -3,7 +3,7 @@ import React,{useEffect, useState} from 'react'
 import { useForms } from '../context/FormContext'
 import { useClients } from '../context/ClienteContext'
 import {  useNavigate } from 'react-router-dom';
-import  NotificacionesCli  from '../components/ui/NotificacionesCli';
+// import  NotificacionesCli  from '../components/ui/NotificacionesCli';
 
 
 
@@ -177,7 +177,7 @@ function handleList  (e)  {
   <p class="card-text">¡Gracias por ser parte de nuestra historia!</p>
   </div>
 </div>
-         <NotificacionesCli />
+         {/* <NotificacionesCli /> */}
 
       <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-8">
